@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!--<link href="css/base.css" rel="stylesheet" />-->
+    <style>
+        *{
+            margin:0;padding:0;
+        }
+        li{
+            list-style: none;
+        }
+        #wrap {
+            margin: 10px auto;
+            width: 560px; height: 300px;
+            position: relative;
+            border: 1px solid red;
+            overflow: hidden;
+        }
+        #pic-list {
+            width:7000px;height: 300px;
+            position: relative;left:0;top:0;
+        }
+        #pic-list li {
+            width: 560px; height: 300px;
+            float: left;
+        }
+
+        #btn-list {
+            position: absolute; left: 0; bottom: 0;
+            width: 100%; overflow: hidden;
+            background-color: rgba(0,0,0,.3)
+        }
+        #btn-list li {
+            float: left;
+            height: 50px; width: 80px;
+            margin: 10px;
+            cursor: pointer;
+            border: 2px dashed transparent
+        }
+        #btn-list .active {
+            border-color:  #ff7700;
+        }
+        #wrap img { width: 100%; height: 100%;}
+
+        a { position: absolute; top: 50%; margin-top: -25px; height: 50px; line-height: 50px; width: 60px; background-color: rgba(0,0,0,.3);color: rgba(255,255,255,.8); font-size: 30px; text-align: center; left: 0; display: none; font-family:"inherit" ;font-weight: bold}
+
+        #next { right:0; left: auto}
+
+        #wrap:hover a { display: block}
+        a:hover { background-color: rgba(0,0,0,.5); color: #fff; text-shadow: 0 0 3px #fff}
+    </style>
+</head>
+<body>
+
+<div id="wrap">
+
+    <ul id="pic-list">
+        <li class="active"><img src="img/1a.jpg"></li>
+        <li><img src="img/2a.jpg"></li>
+        <li><img src="img/3a.jpg"></li>
+        <li><img src="img/4a.jpg"></li>
+        <li><img src="img/5a.jpg"></li>
+    </ul>
+
+    <ul id="btn-list">
+        <li class="active"><img src="img/1a.jpg"></li>
+        <li><img src="img/2a.jpg"></li>
+        <li><img src="img/3a.jpg"></li>
+        <li><img src="img/4a.jpg"></li>
+        <li><img src="img/5a.jpg"></li>
+    </ul>
+
+    <a id="prev" href="javascript:;"><</a>
+    <a id="next" href="javascript:;">></a>
+</div>
+<script src="jquery-1.7.2.min.js"></script>
+<script>
+    //获取各个节点。
+    var $wrap = $("#wrap");
+    var $prev = $("#prev");
+    var $next = $("#next");
+    var $picList = $("#pic-list");
+    var $picLi = $("#pic-list li");
+    var $btnLi = $("#btn-list li");
+
+    var timer;
+    var $Index = 0;
+    var $iW = $picLi.outerWidth();
+    var $len = $picLi.length;
+    //再添加一组$picList，衔接起来可以造就无缝视觉差。
+    var $picListHtml = $picList.html()
+    $picList.html($picListHtml+$picListHtml);
+    //调用自动播放函数，进行自动播放。
+    autoPlay();
+    //点击左按钮播放下一张
+    $next.click(function(){
+        if($Index == $len){
+            $Index = 0;
+            $picList.css({"left":0})
+        }
+        $Index++
+        changeView()
+    });
+    //点击左右按钮播放上一张
+    $prev.click(function(){
+        if($Index == 0){
+            $Index = $len;
+            $picList.css({"left":-$len*$iW})
+        }
+        $Index--
+        changeView()
+    });
+    //点击小按钮切换播放。
+    $btnLi.click(function(){
+        $Index = $(this).index();
+        changeView()
+    });
+    //鼠标划入时清楚定时器，划出时启动定时器。
+    $wrap.hover(
+            function(){
+                clearInterval(timer);
+            },
+            function(){
+                autoPlay();
+            }
+    );
+    //实现播放函数。
+    function changeView(){
+        $picList.stop().animate({"left": -$iW*$Index+"px"})
+        $btnLi.eq($Index%$len).addClass("active").siblings().removeClass("active");
+
+    }
+    //自动轮播函数。
+    function autoPlay(){
+        timer = setInterval(function(){
+            $next.click()
+        },2000)
+    }
+
+
+</script>
+</body>
+</html>

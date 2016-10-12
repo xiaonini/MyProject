@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;padding:0;
+        }
+        li{
+            list-style: none;
+        }
+        #wrap {
+            margin: 0 auto;
+            width: 560px; height: 300px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid red
+        }
+        #pic-list {
+            height: 300px;
+            position: relative;left:0;top:0;
+        }
+        #pic-list li {
+            width: 560px; height: 300px;
+        }
+
+        #btn-list {
+            position: absolute; left: 0; bottom: 0;
+            width: 100%; overflow: hidden;
+            background-color: rgba(0,0,0,.3)
+        }
+        #btn-list li {
+            float: left;
+            height: 50px; width: 80px;
+            margin: 10px;
+            cursor: pointer;
+            border: 2px dashed transparent
+        }
+        #btn-list .active {
+            border-color:  #ff7700;
+        }
+        #wrap img { width: 100%; height: 100%;}
+
+    </style>
+</head>
+<body>
+
+
+
+<div id="wrap">
+    <ul id="pic-list">
+        <li><img src="img/1a.jpg"></li>
+        <li><img src="img/2a.jpg"></li>
+        <li><img src="img/3a.jpg"></li>
+        <li><img src="img/4a.jpg"></li>
+        <li><img src="img/5a.jpg"></li>
+    </ul>
+
+    <ul id="btn-list">
+        <li class="active"><img src="img/1a.jpg"></li>
+        <li><img src="img/2a.jpg"></li>
+        <li><img src="img/3a.jpg"></li>
+        <li><img src="img/4a.jpg"></li>
+        <li><img src="img/5a.jpg"></li>
+    </ul>
+</div>
+<script src="jquery-1.7.2.min.js"></script>
+<script>
+    var aLi = $("#btn-list li")
+    aLi.click(function(){
+        console.log($(this).index());
+        if($(this).hasClass("active")){
+            return;
+        }
+        $(this).addClass("active").siblings().removeClass("active");
+        $("#pic-list li").slideUp().eq($(this).index()).slideDown();
+    })
+</script>
+</body>
+</html>

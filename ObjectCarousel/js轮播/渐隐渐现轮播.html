@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="css/base.css" rel="stylesheet" />
+    <script src="js/dom.js"></script>
+
+    <style>
+        #wrap {
+            margin: 0 auto;
+            width: 560px; height: 300px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid red
+        }
+        #pic-list {
+            height: 300px; position: relative
+        }
+        #pic-list li {
+            position: absolute;
+            top: 0; left: 0;
+            width: 560px; height: 300px;
+        }
+
+        #btn-list {
+            position: absolute; left: 0; bottom: 0;
+            width: 100%; overflow: hidden;
+            background-color: rgba(0,0,0,.3)
+        }
+        #btn-list li { float: left; height: 50px; width: 80px; margin: 10px; cursor: pointer;border: 2px dashed transparent }
+        #btn-list .active {border-color:  #ff7700}
+        #wrap img { width: 100%; height: 100%;}
+
+        a { position: absolute; top: 50%; margin-top: -25px; height: 50px; line-height: 50px; width: 60px; background-color: rgba(0,0,0,.3);color: rgba(255,255,255,.8); font-size: 30px; text-align: center; left: 0; display: none; font-family:"inherit" ;font-weight: bold}
+
+        #next { right:0; left: auto}
+
+        #wrap:hover a { display: block}
+        a:hover { background-color: rgba(0,0,0,.5); color: #fff; text-shadow: 0 0 3px #fff}
+    </style>
+</head>
+<body>
+
+
+
+<div id="wrap">
+
+
+    <ul id="pic-list">
+        <li class="active"><img src="img/1a.jpg"></li>
+        <li><img src="img/2a.jpg"></li>
+        <li><img src="img/3a.jpg"></li>
+        <li><img src="img/4a.jpg"></li>
+        <li><img src="img/5a.jpg"></li>
+    </ul>
+
+    <ul id="btn-list">
+        <li ><img src="img/1a.jpg"></li>
+        <li><img src="img/2a.jpg"></li>
+        <li><img src="img/3a.jpg"></li>
+        <li><img src="img/4a.jpg"></li>
+        <li><img src="img/5a.jpg"></li>
+    </ul>
+
+    <a id="prev" href="javascript:;"><</a>
+    <a id="next" href="javascript:;">></a>
+</div>
+<script src="js/move.js"></script>
+<script>
+    window.onload = function(){
+        var oWrap = getId("wrap");//轮播图的壳子
+        var oPicList = getId("pic-list");//轮播大图ul
+        var aPic = oPicList.children;//轮播大图li
+        var oBtnList = getId("btn-list");//轮播点击小图ul
+        var aBtn = oBtnList.children;//轮播点击小图li
+
+        var oPrev = getId("prev");//轮播点击右侧a标签
+        var oNext = getId("next");//轮播点击左侧a标签
+
+        var timer = null;//轮播定时器
+        var len = aBtn.length;//轮播点击小图li的长度
+
+        var iNow = 0; //当前的下标
+
+        /*demo初始i化*/
+        for(var i = 1; i < len; i++){
+            aPic[i].style.opacity = 0;
+        }
+        aPic[iNow].style.opacity=100;
+
+        aBtn[iNow].className = "active";
+
+        autoPlay(); //让轮播自动播放
+        /*给所有的按钮加事件*/
+        for(var i=0;i<len;i++){
+            /*保存下标*/
+            aBtn[i].index = i;
+
+            aBtn[i].onclick=function () {
+                iNow = this.index;//保存下标
+                changeView()//改变视图
+            }
+        }
+
+        /*上一个*/
+        oPrev.onclick=function () {
+            /*要知道，当前是第几个图片， 也就是要知道，当前的下标*/
+            iNow--; //改变下标
+            if(iNow<0){
+                iNow=len-1;
+            }
+            changeView()//改变视图
+        };
+        /*下一个*/
+        oNext.onclick=function () {
+            /*让下标+1的显示  iNow++*/
+            iNow++;
+            //len-1 是最后一个，如果比最后一个还大，就没有了
+            if(iNow>len-1){
+                iNow=0
+            }
+            changeView()//改变视图
+        };
+
+
+        oWrap.onmouseover=function () {
+            /*当鼠标移入的时候，需要清除定时器*/
+            clearInterval(timer)
+        };
+
+        oWrap.onmouseout=function () {
+            /*当鼠标移出的时候，自己跑*/
+            autoPlay()
+        };
+
+        function autoPlay() {
+            timer = setInterval(function () {
+                /*让下标+1的显示  iNow++*/
+                iNow++;
+                //len-1 是最后一个，如果比最后一个还大，就没有了
+                if(iNow>len-1){
+                    iNow=0
+                }
+                changeView()//改变视图
+            },2000);
+        }
+
+
+
+        function changeView() {
+            /*先把所有按钮的active去掉，让所有图片隐藏*/
+            for(var j=0;j<len;j++){
+                aBtn[j].className = "";
+                starMove3 (aPic[j],{"opacity":10})
+            }
+            /*让当前的按钮 有active的样式，当前的图片显示*/
+            aBtn[iNow].className = "active";
+            starMove3 (aPic[iNow],{"opacity":100})
+
+        }
+    }
+
+
+</script>
+</body>
+</html>

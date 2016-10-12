@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>轮播图</title>
+	<style type="text/css">
+		*{margin:0; padding:0;}
+		#container{
+			position: relative;
+			width:520px;
+			height: 280px;
+			margin: 20px auto;
+			overflow:hidden;
+		}
+		ul{list-style: none; width:3000px; position: absolute;}
+		li{float: left;}
+		#leftBtn{
+			display: block;
+			background: url(img/btn.png);
+			width: 48px;
+			height: 60px;
+			position: absolute;
+			top:110px;
+			left: -48px;
+			filter: alpha(opacity:0);
+			opacity: 0;
+			z-index: 10;
+		}
+		#rightBtn{
+			display: block;
+			background: url(img/btn.png);
+			width: 48px;
+			height: 60px;
+			background-position: -48px 0px;
+			position: absolute;
+			top:110px;
+			right: -48px;
+			filter: alpha(opacity:0);
+			opacity: 0;
+			z-index: 10;
+		}
+		#btn-list {
+			position: absolute; left: 0; bottom: 0;
+			width: 100%;
+			overflow: hidden;
+			background-color: rgba(0,0,0,.3)
+		}
+		#btn-list li { float: left; height: 50px; width: 80px; margin: 10px; cursor: pointer;border: 2px dashed transparent }
+		#btn-list li img{height: 50px; width: 80px;}
+		#btn-list .active {border-color:  #ff7700}
+	</style>
+
+</head>
+<body>
+	<div id="container">
+		<a href="#" id="leftBtn"></a>
+		<a href="#" id="rightBtn"></a>
+		<ul id="ul">
+			<li><img src="img/1.png"></li>
+			<li><img src="img/2.png"></li>
+			<li><img src="img/3.png"></li>
+			<li><img src="img/4.png"></li>
+			<li><img src="img/5.png"></li>
+		</ul>
+		<ul id="btn-list">
+			<li class="active"><img src="img/1.png"></li>
+			<li><img src="img/2.png"></li>
+			<li><img src="img/3.png"></li>
+			<li><img src="img/4.png"></li>
+			<li><img src="img/5.png"></li>
+		</ul>
+
+	</div>
+</body>
+<script src	="js/dom.js"></script>
+<script src="js/startMove.js"></script>
+<script>
+	window.onload = function(){
+		var container = setId("container");
+		var leftBtn = setId("leftBtn");
+		var rightBtn = setId("rightBtn");
+		var oUl = setId("ul");
+		console.log(oUl)
+		var nav = setId("btn-list");
+		var firstLI = oUl.children[0].cloneNode(true);
+		oUl.appendChild(firstLI);
+		var spanList = nav.children;
+		var imgWidth = oUl.children[0].offsetWidth;
+		oUl.style.width = oUl.children.length * imgWidth + "px";
+
+		container.onmouseover = function(){
+			startMove(leftBtn,{opacity:100,left:0});
+			startMove(rightBtn,{opacity:100,right:0});
+			clearInterval(timer)
+		}
+		container.onmouseout = function(){
+			startMove(leftBtn,{opacity:0,left:-48});
+			startMove(rightBtn,{opacity:0,right:-48});
+			autoPlay()
+		}
+		var currIndex = 0; //计数器，利用变量存储一个改变的数值
+		rightBtn.onclick = function(){
+			currIndex++;
+			if(currIndex == oUl.children.length){
+				currIndex = 1;
+				oUl.style.left = "0px";
+			}
+			setNav(currIndex > 4 ? 0 : currIndex);
+			startMove(oUl,{left:currIndex*imgWidth*-1});
+		}
+
+		leftBtn.onclick = function(){
+			currIndex--;
+			if(currIndex == -1){
+				oUl.style.left = (oUl.children.length-1) * imgWidth * -1 + "px";
+				currIndex = 4;
+			}
+			setNav(currIndex);
+			startMove(oUl,{left:currIndex*imgWidth*-1});
+		}
+
+		for(var i = 0;i<spanList.length;i++){
+			spanList[i].index = i;
+			spanList[i].onclick = function(){
+				autoPlay();
+				currIndex = this.index;
+				setNav(this.index);
+				startMove(oUl,{left:this.index*imgWidth*-1});
+			}
+		}
+
+		var timer;
+		function autoPlay(){
+			clearInterval(timer);
+			timer = setInterval(function(){
+				rightBtn.onclick();
+			},1500);
+		}
+
+		autoPlay();
+
+		function setNav(index){
+			for(var i = 0; i<spanList.length;i++){
+				spanList[i].className = "";
+			}
+			spanList[index].className = "active";
+		}
+	}
+</script>
+
+</html>
