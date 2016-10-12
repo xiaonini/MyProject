@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{margin:0;padding:0}
+        ul{width:50px;height:50px;position: relative;top:100px;left: 300px;-webkit-transform-style: preserve-3d;-webkit-perspective:0px;}
+        li{list-style: none;position: absolute;width:50px;height:50px;line-height: 50px;font-size: 40px;color:#FFFFFF;text-align: center;}
+        li:nth-child(1){background:rgba(200,0,0,.5);-webkit-transform:rotateX(90deg)   translateZ(25px);border-radius: 25px;}
+        li:nth-child(2){background:rgba(255,200,0,.5);-webkit-transform:rotateX(-90deg) translateZ(25px);border-radius: 25px;}
+        li:nth-child(3){background:rgba(255,0,200,.5);-webkit-transform:rotateY(-90deg) translateZ(25px);border-radius: 25px;}
+        li:nth-child(4){background:rgba(200,0,0,.5);-webkit-transform:rotateY(90deg) translateZ(25px);border-radius: 25px;}
+        li:nth-child(5){background:rgba(0,200,0,.5);-webkit-transform:rotateX(-180deg) translateZ(25px);border-radius: 25px;}
+        li:nth-child(6){background:rgba(2,0,200,.5);-webkit-transform:rotateX(0deg) translateZ(25px);border-radius: 25px;}
+
+        ul{-webkit-animation:run 2s linear infinite alternate;}
+        @-webkit-keyframes run{
+            0%{-webkit-transform: rotateX(0deg) rotateY(0deg);top:100px;left: 300px;}
+            25%{-webkit-transform: rotateX(90deg) rotateY(90deg);top:150px;left: 400px;}
+            50%{-webkit-transform: rotateX(180deg) rotateY(180deg);top:200px;left: 500px;}
+            75%{-webkit-transform: rotateX(270deg) rotateY(270deg);top:250px;left: 600px;}
+            100%{-webkit-transform:rotateX(360deg) rotateY(360deg);top:300px;left:700px}
+        }
+    </style>
+</head>
+<body>
+<ul data-sate = "isrun">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+</ul>
+
+<input id="con" type="button" value="stop" />
+<input id="run" type="button" value="run" />
+<style type="text/css">
+    #div1{
+        position:relative;
+        top:400px;
+        left:200px;
+        width:900px;
+        height:300px;
+        /*-webkit-perspective: 800px;*/
+        -webkit-perspective-origin: 50% 10%;
+        perspective:800px
+    }
+    #div2{
+        -webkit-transform-style: preserve-3d;
+        transition: all 1s;
+        height:120px;
+        width:120px;
+        position: absolute;
+        left: 50%;
+        margin-left: -60px;
+    }
+    .item{
+        width: 133px;
+        height: 200px;
+        position: absolute;
+        box-shadow: 2px 2px 2px 0px #5E5E5E;
+        -webkit-box-reflect:below 10px -webkit-linear-gradient(top,rgba(0,0,0,0) 50%,rgba(0,0,0,0.7) 100%);
+    }
+    .item:nth-child(1){background:url(img/11.jpg) no-repeat;background-size:100%;transform: rotateY(0deg) translateZ(200px);}
+    .item:nth-child(2){background:url(img/12.jpg) no-repeat;background-size:100%;transform: rotateY(40deg) translateZ(200px);}
+    .item:nth-child(3){background:url(img/13.jpg) no-repeat;background-size:100%;transform: rotateY(80deg) translateZ(200px);}
+    .item:nth-child(4){background:url(img/14.jpg) no-repeat;background-size:100%;transform: rotateY(120deg) translateZ(200px);}
+    .item:nth-child(5){background:url(img/15.jpg) no-repeat;background-size:100%;transform: rotateY(160deg) translateZ(200px);}
+    .item:nth-child(6){background:url(img/16.jpg) no-repeat;background-size:100%;transform: rotateY(200deg) translateZ(200px);}
+    .item:nth-child(7){background:url(img/17.jpg) no-repeat;background-size:100%;transform: rotateY(240deg) translateZ(200px);}
+    .item:nth-child(8){background:url(img/18.jpg) no-repeat;background-size:100%;transform: rotateY(280deg) translateZ(200px);}
+    .item:nth-child(9){background:url(img/19.jpg) no-repeat;background-size:100%;transform: rotateY(320deg) translateZ(200px);}
+</style>
+<div id="div1">
+    <div id="div2">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    document.getElementById("con").onclick=function(){
+
+
+        document.getElementsByTagName("ul")[0].style.animationPlayState =  "paused";
+    }
+    document.getElementById("run").onclick=function(){
+
+
+        document.getElementsByTagName("ul")[0].style.animationPlayState =  "running";
+    }
+
+    var tmp =0;
+    for(var i=0;i<document.getElementsByClassName("item").length;i++){
+        document.getElementsByClassName("item")[i].onclick = function(){
+            tmp=tmp+40;
+            console.log(tmp);
+            document.getElementById("div2").style.transform = "rotateY("+(-1*tmp)+"deg)";
+        }
+    }
+</script>
+</body>
+</html>

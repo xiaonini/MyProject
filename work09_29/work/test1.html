@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        html,body{
+            width:100%;height: 100%;
+            perspective:1200px ;
+            background: #000;
+        }
+        #box{
+            width:133px;height: 200px;
+            margin: 200px auto;position: relative;
+            transform-style:preserve-3d;
+            transform: rotateX(15deg);
+            /*transform: translateZ(100px);*/
+
+        }
+        #box div{
+            border:#cefff3 solid 5px;
+            position: absolute;
+            width:133px;height:200px;
+            transform-origin: left ;
+        }
+        #box div:nth-child(1){
+            background:rgba(100,100,100 ,0.5);
+            transform-origin: left ;
+            transform:rotateY(-150deg);
+            z-index: -1;
+        }
+        /*#pic1{*/
+            /*z-index: 10;*/
+        /*}*/
+        /*#pic2{*/
+            /*z-index: 9;*/
+        /*}*/
+        /*#pic3{*/
+            /*z-index: 8;*/
+        /*}*/
+        /*#pic4{*/
+            /*z-index: 7;*/
+        /*}*/
+        /*#pic5{*/
+            /*z-index: 6;*/
+        /*}*/
+        /*#pic6{*/
+            /*z-index: 5;*/
+        /*}*/
+        /*#pic7{*/
+            /*z-index: 4;*/
+        /*}*/
+        /*#pic8{*/
+            /*z-index: 3;*/
+        /*}*/
+        /*#pic9{*/
+            /*z-index: 2;*/
+        /*}*/
+        /*#pic10{*/
+            /*z-index: 1;*/
+        /*}*/
+        #box div:nth-child(12){
+            background:rgba(100,100,100 ,0.5);
+            transform-origin: left ;
+            transform:rotateY(-10deg);
+            z-index: -1;
+        }
+
+        .active{
+            transform:rotateY(-10deg);
+        }
+        .active1{
+            transform:rotateY(-150deg);
+            transition: all 2s;
+        }
+        .active2{
+            transform:rotateY(-10deg);
+            transition: all 2s;
+        }
+
+    </style>
+
+
+</head>
+<body>
+    <div id="box">
+        <div></div>
+        <div class="pic" id="pic1"><img src="img/11.jpg" /></div>
+        <div class="pic" id="pic2"><img src="img/12.jpg" /></div>
+        <div class="pic" id="pic3"><img src="img/13.jpg" /></div>
+        <div class="pic" id="pic4"><img src="img/14.jpg" /></div>
+        <div class="pic" id="pic5"><img src="img/15.jpg" /></div>
+        <div class="pic" id="pic6"><img src="img/16.jpg" /></div>
+        <div class="pic" id="pic7"><img src="img/17.jpg" /></div>
+        <div class="pic" id="pic8"><img src="img/18.jpg" /></div>
+        <div class="pic" id="pic9"><img src="img/19.jpg" /></div>
+        <div class="pic" id="pic10"><img src="img/20.jpg" /></div>
+        <div></div>
+    </div>
+</body>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script>
+    var $box = $("#box");
+    var $oPic = $(".pic");
+    window.z=10;
+    $oPic.each(function(){
+        window.z--;
+        $(this).css('z-index',window.z);
+    });
+    console.log($oPic.eq(0));
+    $oPic.addClass("active");
+    $oPic.click(function(){
+        var $index = $(this).index();
+        if($(this).hasClass("active1")){
+            $(this).addClass("active2");
+            $(this).removeClass("active1");
+        }
+        else{
+            $(this).addClass("active1");
+            $(this).removeClass("active2");
+            $(this).css("z-index",$index);
+        }
+    });
+</script>
+
+</html>

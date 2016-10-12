@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html,body{
+            width:100%;height:100%;
+        }
+        body{
+            background: #000;
+            perspective:1200px ;
+        }
+        #box{
+            width:133px;height: 200px;
+            transform-style:preserve-3d;
+            margin: 200px auto;
+            position: relative;
+            animation: move 200s cubic-bezier(0, -0.01, 0.97, 0.97) infinite alternate;
+        }
+        #box div{
+            width:133px;height: 200px;
+            position: absolute;
+        }
+        #box div img{
+            width:133px;height: 200px;
+            -webkit-box-reflect:below 10px -webkit-linear-gradient(top,rgba(0,0,0,0) 50%,rgba(0,0,0,0.7) 100%);
+        }
+        #box div:nth-child(1){
+            transform: rotateY(36deg) translateZ(250px);
+        }
+        #box div:nth-child(2){
+            transform: rotateY(72deg) translateZ(250px);
+        }
+        #box div:nth-child(3){
+            transform: rotateY(108deg) translateZ(250px);
+        }
+        #box div:nth-child(4){
+            transform: rotateY(144deg) translateZ(250px);
+        }
+        #box div:nth-child(5){
+            transform: rotateY(180deg) translateZ(250px);
+        }
+        #box div:nth-child(6){
+            transform: rotateY(216deg) translateZ(250px);
+        }
+        #box div:nth-child(7){
+            transform: rotateY(252deg) translateZ(250px);
+        }
+        #box div:nth-child(8){
+            transform: rotateY(288deg) translateZ(250px);
+        }
+        #box div:nth-child(9){
+            transform: rotateY(324deg) translateZ(250px);
+        }
+        #box div:nth-child(10){
+            transform: rotateY(360deg) translateZ(250px);
+        }
+
+        @keyframes move {
+            from{
+                transform:rotateY(0deg);
+            }
+            to{
+                transform:rotateY(7200deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+
+    <div>
+        <img src="imgs/jing1.jpg" />
+    </div>
+    <div>
+        <img src="imgs/jing2.jpg" />
+    </div>
+    <div>
+        <img src="imgs/jing3.jpg" />
+    </div>
+    <div>
+        <img src="imgs/jing4.jpg" />
+    </div>
+    <div>
+        <img src="imgs/jing5.jpg" />
+    </div>
+    <div>
+        <img src="imgs/jing6.jpg" />
+    </div>
+    <div>
+        <img src="imgs/jing7.jpg" />
+    </div>
+    <div>
+        <img src="imgs/jing8.jpg" />
+    </div>
+    <div>
+        <img src="imgs/jing9.jpg" />
+    </div>
+    <div>
+        <img src="imgs/jing10.jpg" />
+    </div>
+</div>
+</body>
+</html>
